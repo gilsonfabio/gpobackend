@@ -1,7 +1,9 @@
-const crypto = require('crypto');
 const connection = require('../database/connection');
 const nodemailer = require("nodemailer");
 require('dotenv/config');
+
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const jwt = require('jsonwebtoken');
 const {v4:uuidv4} = require ('uuid') ; 
@@ -10,21 +12,32 @@ module.exports = {
     async signIn(request, response) {
         let email = request.body.email;
         let senha = request.body.password;
-        let encodedVal = crypto.createHash('md5').update(senha).digest('hex');
-        
-        console.log(email)
-        console.log(senha)
+       
+        //console.log(email)
+        //console.log(senha)
 
         const user = await connection('administradores')
             .where('admEmail', email)
-            .where('admPassword', encodedVal)
             .join('candidatos', 'canKey', 'administradores.admCandidato')
-            .select('administradores.admId', 'administradores.admNomCompleto', 'administradores.admEmail', 'candidatos.canRazSocial')
+            .select('administradores.admId', 'administradores.admNomCompleto', 'administradores.admEmail', 'administradores.admPassword', 'candidatos.canRazSocial')
             .first();
           
         if (!user) {
             return response.status(400).json({ error: 'Não encontrou usuário com este ID'});
         } 
+
+        let pass = user.admPassword;
+        const match = await bcrypt.compare(senha, pass)
+
+        if(!match) {
+            return response.status(403).send({ auth: false, message: 'User invalid!' });
+        }
+
+        const dados = {
+            usrId: user.usrId,
+            usrNome: user.usrNome,
+            usrNivAcesso: user.usrNivAcesso
+        }
 
         let refreshIdToken = uuidv4(); 
                 
@@ -35,7 +48,7 @@ module.exports = {
             expiresIn: process.env.EXPIREIN_JWT_REFRESH
         });
 
-        console.log(token);
+        //console.log(token);
 
         return response.json({user, token, refreshToken});
 
@@ -52,7 +65,8 @@ module.exports = {
     async create(request, response) {
         const {admNomUsuario, admNomCompleto, admFuncao, admEmail, admCelular, admEndereco, admNumero, admComplemento, admBairro, admCidade, admCep, admUrlPhoto, admCandidato, admPassword} = request.body;
         var status = 'A'; 
-        var senha = crypto.createHash('md5').update(admPassword).digest('hex');
+        let snhCrypt = await bcrypt.hash(admPassword, saltRounds);
+
         const [admId] = await connection('administradores').insert({
             admNomUsuario, 
             admNomCompleto, 
@@ -67,7 +81,7 @@ module.exports = {
             admCep, 
             admUrlPhoto, 
             admCandidato, 
-            admPassword: senha, 
+            admPassword: snhCrypt, 
             admStatus: status
         });
            
