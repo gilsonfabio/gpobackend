@@ -34,24 +34,32 @@ module.exports = {
             return response.status(403).send({ auth: false, message: 'User invalid!' });
         }
 
-        console.log(match);
+        const dados = {
+            usrId: user.conId,
+            usrNome: user.conNomCompleto,
+            usrEmail: user.conEmail,
+            usrCandidado: user.conCandidato
+        }
+
+        //console.log(dados);
 
         let refreshIdToken = uuidv4(); 
                 
         let token = jwt.sign({ id: user.conId, name: user.conNomCompleto, email: user.conEmail}, process.env.SECRET_JWT, {
-            expiresIn: process.env.EXPIREIN_JWT
+            expiresIn: "1d"
         });
         let refreshToken = jwt.sign({ id: user.conId, name: user.conNomCompleto, email: user.conEmail}, process.env.SECRET_JWT_REFRESH, {
-            expiresIn: process.env.EXPIREIN_JWT_REFRESH
+            expiresIn: "2d"
         });
 
-        console.log(token);
+        //console.log(token);
 
-        return response.json({user, token, refreshToken});
+        return response.json({dados, token, refreshToken});
 
     },
 
     async index (request, response) {
+        let id = request.params.idCan;  
         const contatos = await connection('contatos')
         .where('conCanditado', id)
         .orderBy('conNomCompleto')
@@ -60,5 +68,181 @@ module.exports = {
         return response.json(contatos);
     }, 
 
+    async create(request, response) {
+        const {
+            conCandidato, 
+            conNomCompleto, 
+            conGenero, 
+            conCpf, 
+            conIdentidade, 
+            conOrgEmissor, 
+            conTitEleitor, 
+            conTrabalho, 
+            conCargo, 
+            conCelular, 
+            conEmail, 
+            conEndereco, 
+            conNumero, 
+            conBairro, 
+            conCidade, 
+            conUf, 
+            conComplemento, 
+            conNascimento, 
+            conPai, 
+            conMae, 
+            conEstCivil, 
+            conConjuge, 
+            conNasConjuge, 
+            conInfluencia, 
+            conLatitude, 
+            conLongitude, 
+            conPassword} = request.body;
+        var status = 'A'; 
+        let snhCrypt = await bcrypt.hash(conPassword, saltRounds);
+
+        const [conId] = await connection('contatos').insert({
+            conCandidato, 
+            conNomCompleto, 
+            conGenero, 
+            conCpf, 
+            conIdentidade, 
+            conOrgEmissor, 
+            conTitEleitor, 
+            conTrabalho, 
+            conCargo, 
+            conCelular, 
+            conEmail, 
+            conEndereco, 
+            conNumero, 
+            conBairro, 
+            conCidade, 
+            conUf, 
+            conComplemento, 
+            conNascimento, 
+            conPai, 
+            conMae, 
+            conEstCivil, 
+            conConjuge, 
+            conNasConjuge, 
+            conInfluencia, 
+            conLatitude, 
+            conLongitude, 
+            conPassword: snhCrypt, 
+            conStatus: status
+        });
+           
+        return response.json({conId});
+    },
+
+    async updContato(request, response) {
+        let id = request.params.idCon;         
+        const {
+            conNomCompleto, 
+            conGenero, 
+            conCpf, 
+            conIdentidade, 
+            conOrgEmissor, 
+            conTitEleitor, 
+            conTrabalho, 
+            conCargo, 
+            conCelular, 
+            conEmail, 
+            conEndereco, 
+            conNumero, 
+            conBairro, 
+            conCidade, 
+            conUf, 
+            conComplemento, 
+            conNascimento, 
+            conPai, 
+            conMae, 
+            conEstCivil, 
+            conConjuge, 
+            conNasConjuge, 
+            conInfluencia, 
+            conLatitude, 
+            conLongitude, 
+            conPassword} = request.body;
+        await connection('contatos').where('conId', id)   
+        .update({
+            conNomCompleto, 
+            conGenero, 
+            conCpf, 
+            conIdentidade, 
+            conOrgEmissor, 
+            conTitEleitor, 
+            conTrabalho, 
+            conCargo, 
+            conCelular, 
+            conEmail, 
+            conEndereco, 
+            conNumero, 
+            conBairro, 
+            conCidade, 
+            conUf, 
+            conComplemento, 
+            conNascimento, 
+            conPai, 
+            conMae, 
+            conEstCivil, 
+            conConjuge, 
+            conNasConjuge, 
+            conInfluencia, 
+            conLatitude, 
+            conLongitude, 
+            conPassword
+        });
+           
+        return response.status(204).send();
+    },
+
+    async searchContato (request, response) {
+        const {
+            id,
+            nomContato, 
+            cpf, 
+            celular, 
+            email} = request.body;
+
+        if (conId != 0) {    
+            const contato = await connection('contatos')
+            .where('conId', id)
+            .orderBy('conNomCompleto')
+            .select('*');
+        }else {
+            if (conNomCompleto != '') {
+                const contato = await connection('contatos')
+                .where('conNomCompleto', like, `%${nomContato.replaceAll('%', '\\%')}%`)
+                .orderBy('conNomCompleto')
+                .select('*');
+            }else {
+                if (cpf != 0) {
+                    const contato = await connection('contatos')
+                    .where('conCpf', cpf)
+                    .orderBy('conNomCompleto')
+                    .select('*');
+                }else {
+                    if (celular != 0) {
+                        const contato = await connection('contatos')
+                        .where('conCelular', celular)
+                        .orderBy('conNomCompleto')
+                        .select('*');
+                    }else {
+                        if (email != '') {
+                            const contato = await connection('contatos')
+                            .where('conEmail', email)
+                            .orderBy('conNomCompleto')
+                            .select('*');
+                        }    
+                    }    
+                }
+            }
+        }    
+        if (!contato) {
+            return response.status(404).send({erro: true, msn: 'Contato não localizado!'});
+        }
+        
+        return response.json(contato);
+    },
     
 };

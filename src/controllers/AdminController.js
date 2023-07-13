@@ -19,7 +19,7 @@ module.exports = {
         const user = await connection('administradores')
             .where('admEmail', email)
             .join('candidatos', 'canKey', 'administradores.admCandidato')
-            .select('administradores.admId', 'administradores.admNomCompleto', 'administradores.admEmail', 'administradores.admPassword', 'candidatos.canRazSocial')
+            .select('administradores.admId', 'administradores.admNomCompleto', 'administradores.admEmail', 'administradores.admPassword', 'administradores.admCandidato', 'candidatos.canRazSocial')
             .first();
           
         if (!user) {
@@ -34,10 +34,13 @@ module.exports = {
         }
 
         const dados = {
-            usrId: user.usrId,
-            usrNome: user.usrNome,
-            usrNivAcesso: user.usrNivAcesso
+            usrId: user.admId,
+            usrNome: user.admNomCompleto,
+            usrEmail: user.admEmail,
+            usrCandidato: user.admCandidato
         }
+
+        console.log(dados);
 
         let refreshIdToken = uuidv4(); 
                 
