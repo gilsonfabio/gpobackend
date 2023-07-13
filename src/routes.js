@@ -21,6 +21,7 @@ const DenunciasController = require('./controllers/DenunciasController');
 const UtilidadesController = require('./controllers/UtilidadesController');
 const ImportsController = require('./controllers/ImportsController');
 const CitiesController = require('./controllers/CitiesController');
+const PostitController = require('./controllers/PostitController');
 
 routes.get('/', (request, response) => {
     response.json({
@@ -109,5 +110,11 @@ routes.post('/geraUfs', ImportsController.gerUfs);
 routes.post('/geraCities/:uf', ImportsController.importCities);
 
 routes.get('/cities/:city', CitiesController.index);
+
+routes.get('/postit', PostitController.index);
+routes.post('/newpostit', PostitController.create);
+routes.put('/updpostit/:idPos', PostitController.updPostit);
+routes.get('/searchPostit/:idPos', PostitController.searchPostit);
+routes.get('/perPostit/:datIni/:datFin', PostitController.perPostit);
 
 module.exports = routes;
