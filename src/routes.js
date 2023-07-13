@@ -73,7 +73,7 @@ routes.get('/contatos/:idCan', ContatosController.index);
 routes.post('/signInCon', ContatosController.signIn);
 routes.post('/newcontato', ContatosController.create);
 routes.put('/updcontato/:idCon', ContatosController.updContato);
-routes.get('/searchContato', ContatosController.searchContato);
+routes.post('/searchContato', ContatosController.searchContato);
 
 routes.get('/solContato/:idCon', SolicitacoesController.solContato);
 routes.post('/newSolicitacao', SolicitacoesController.newSolicitacao);
