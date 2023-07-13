@@ -50,7 +50,7 @@ module.exports = {
 
         //console.log(token);
 
-        return response.json({user, token, refreshToken});
+        return response.json({dados, token, refreshToken});
 
     },
 
