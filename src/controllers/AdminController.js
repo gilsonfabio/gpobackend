@@ -42,10 +42,10 @@ module.exports = {
         let refreshIdToken = uuidv4(); 
                 
         let token = jwt.sign({ id: user.admId, name: user.admNomCompleto, email: user.admEmail}, process.env.SECRET_JWT, {
-            expiresIn: process.env.EXPIREIN_JWT
+            expiresIn: "1d"
         });
         let refreshToken = jwt.sign({ id: user.admId, name: user.admNomCompleto, email: user.admEmail}, process.env.SECRET_JWT_REFRESH, {
-            expiresIn: process.env.EXPIREIN_JWT_REFRESH
+            expiresIn: "2d"
         });
 
         //console.log(token);
