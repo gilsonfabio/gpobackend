@@ -86,24 +86,24 @@ routes.get('/subTipDenuncias', DenunciasController.subTipDenuncias);
 routes.get('/oportunidades/:tipo', OportunidadesController.oportunidades);
 routes.post('/newOportunidade', OportunidadesController.newOportunidade);
 
-routes.get('/modulos', verifyJWT, ModulosController.index);
+routes.get('/modulos', ModulosController.index);
 routes.get('/iteModulos/:idMod', ModulosController.iteModulos);
 
-routes.get('/cidades', verifyJWT, CidadesController.index);
-routes.post('/newCidade', verifyJWT, CidadesController.create);
-routes.put('/updCidade/:idCid', verifyJWT, CidadesController.updCidade);
+routes.get('/cidades', CidadesController.index);
+routes.post('/newCidade', CidadesController.create);
+routes.put('/updCidade/:idCid', CidadesController.updCidade);
 
-routes.get('/estados', verifyJWT, EstadosController.index);
-routes.post('/newEstado', verifyJWT, EstadosController.create);
-routes.put('/updEstado/:idEst', verifyJWT, EstadosController.updEstado);
+routes.get('/estados', EstadosController.index);
+routes.post('/newEstado', EstadosController.create);
+routes.put('/updEstado/:idEst', EstadosController.updEstado);
 
-routes.get('/bairros', verifyJWT, BairrosController.index);
-routes.post('/newBairro', verifyJWT, BairrosController.create);
-routes.put('/updBairro/:idBai', verifyJWT, BairrosController.updBairro);
+routes.get('/bairros', BairrosController.index);
+routes.post('/newBairro', BairrosController.create);
+routes.put('/updBairro/:idBai', BairrosController.updBairro);
 
-routes.get('/grupos', verifyJWT, GruposController.index);
-routes.post('/newGrupo', verifyJWT, GruposController.create);
-routes.put('/updGrupo/:idGrp', verifyJWT, GruposController.updGrupo);
+routes.get('/grupos', GruposController.index);
+routes.post('/newGrupo', GruposController.create);
+routes.put('/updGrupo/:idGrp', GruposController.updGrupo);
 
 routes.get('/news', NewsController.index);
 
