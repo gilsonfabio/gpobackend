@@ -58,14 +58,15 @@ module.exports = {
 
     },
 
-    async index (request, response) {
+    async index(request, response) {
         let id = request.params.idCan;  
+        console.log(id)
         const contatos = await connection('contatos')
-        .where('conCanditado', id)
+        .where('conCandidato', id)
         .orderBy('conNomCompleto')
         .select('*');
     
-        return response.json(contatos);
+        return response.json({contatos});
     }, 
 
     async create(request, response) {
@@ -204,25 +205,31 @@ module.exports = {
             celular, 
             email} = request.body;
 
-        if (conId != 0) {    
+        console.log(id);   
+        console.log(nomContato);   
+        console.log(cpf);    
+        console.log(celular);   
+        console.log(email);
+
+        if (id != '') {    
             const contato = await connection('contatos')
-            .where('conId', id)
+            .where('conId', id )
             .orderBy('conNomCompleto')
             .select('*');
         }else {
-            if (conNomCompleto != '') {
+            if (nomContato != '') {
                 const contato = await connection('contatos')
                 .where('conNomCompleto', like, `%${nomContato.replaceAll('%', '\\%')}%`)
                 .orderBy('conNomCompleto')
                 .select('*');
             }else {
-                if (cpf != 0) {
+                if (cpf != '') {
                     const contato = await connection('contatos')
                     .where('conCpf', cpf)
                     .orderBy('conNomCompleto')
                     .select('*');
                 }else {
-                    if (celular != 0) {
+                    if (celular != '') {
                         const contato = await connection('contatos')
                         .where('conCelular', celular)
                         .orderBy('conNomCompleto')
@@ -237,11 +244,12 @@ module.exports = {
                     }    
                 }
             }
-        }    
+        } 
+
         if (!contato) {
             return response.status(404).send({erro: true, msn: 'Contato não localizado!'});
         }
-        
+
         return response.json(contato);
     },
     
