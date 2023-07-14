@@ -114,6 +114,7 @@ routes.post('/geraUfs', ImportsController.gerUfs);
 routes.post('/geraCities/:uf', ImportsController.importCities);
 
 routes.get('/cities/:city', CitiesController.index);
+routes.get('/cityIbge/:city', CitiesController.cityIbge);
 
 routes.get('/postit', PostitController.index);
 routes.post('/newpostit', PostitController.create);

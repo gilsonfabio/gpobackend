@@ -15,4 +15,17 @@ module.exports = {
         return response.json(city);
     },    
 
+    async cityIbge (request, response) {
+        let ibge = request.params.city;
+        
+        const city = await connection('cities')
+        .where('citCodIbge', ibge)
+        .join('states', 'stdId', 'cities.citUf')
+        .orderBy('citNome')
+        .select(['cities.*', 'states.stdSigla', 'states.stdNome'])
+        .first();
+        
+        return response.json(city);
+    }, 
+
 };
