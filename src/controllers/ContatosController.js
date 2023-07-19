@@ -12,7 +12,7 @@ module.exports = {
     async signIn(request, response) {
         let email = request.body.email;
         let senha = request.body.password;
-       
+
         const user = await connection('contatos')
             .where('conEmail', email)
             .join('candidatos', 'canKey', 'contatos.conCandidato')
@@ -22,10 +22,6 @@ module.exports = {
         if (!user) {
             return response.status(400).json({ error: 'Não encontrou usuário com este ID'});
         }
-        
-        if (!user) {
-            return response.status(400).json({ error: 'Não encontrou usuário com este ID'});
-        } 
 
         let pass = user.conPassword;
         const match = await bcrypt.compare(senha, pass)
@@ -38,10 +34,8 @@ module.exports = {
             usrId: user.conId,
             usrNome: user.conNomCompleto,
             usrEmail: user.conEmail,
-            usrCandidado: user.conCandidato
+            usrCandidado: user.conCandidato 
         }
-
-        //console.log(dados);
 
         let refreshIdToken = uuidv4(); 
                 
@@ -51,8 +45,6 @@ module.exports = {
         let refreshToken = jwt.sign({ id: user.conId, name: user.conNomCompleto, email: user.conEmail}, process.env.SECRET_JWT_REFRESH, {
             expiresIn: "2d"
         });
-
-        //console.log(token);
 
         return response.json({dados, token, refreshToken});
 

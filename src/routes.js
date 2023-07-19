@@ -22,6 +22,7 @@ const UtilidadesController = require('./controllers/UtilidadesController');
 const ImportsController = require('./controllers/ImportsController');
 const CitiesController = require('./controllers/CitiesController');
 const PostitController = require('./controllers/PostitController');
+const HistoricosController = require('./controllers/HistoricosController');
 
 routes.get('/', (request, response) => {
     response.json({
@@ -121,5 +122,8 @@ routes.post('/newpostit', PostitController.create);
 routes.put('/updpostit/:idPos', PostitController.updPostit);
 routes.get('/searchPostit/:idPos', PostitController.searchPostit);
 routes.get('/perPostit/:datIni/:datFin', PostitController.perPostit);
+
+routes.get('/denHistorico/:denId', HistoricosController.denHistorico);
+routes.get('/solHistorico/:solId', HistoricosController.solHistorico);
 
 module.exports = routes;

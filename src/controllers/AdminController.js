@@ -19,7 +19,7 @@ module.exports = {
         const user = await connection('administradores')
             .where('admEmail', email)
             .join('candidatos', 'canKey', 'administradores.admCandidato')
-            .select('administradores.admId', 'administradores.admNomCompleto', 'administradores.admEmail', 'administradores.admPassword', 'administradores.admCandidato', 'candidatos.canRazSocial')
+            .select('administradores.admId', 'administradores.admNomCompleto', 'administradores.admEmail', 'administradores.admPassword', 'administradores.admCandidato',  'administradores.admUrlPhoto', 'candidatos.canRazSocial')
             .first();
           
         if (!user) {
@@ -37,7 +37,8 @@ module.exports = {
             usrId: user.admId,
             usrNome: user.admNomCompleto,
             usrEmail: user.admEmail,
-            usrCandidato: user.admCandidato
+            usrCandidato: user.admCandidato,
+            usrUrlPhoto: user.admUrlPhoto
         }
 
         console.log(dados);
