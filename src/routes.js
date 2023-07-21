@@ -23,6 +23,7 @@ const ImportsController = require('./controllers/ImportsController');
 const CitiesController = require('./controllers/CitiesController');
 const PostitController = require('./controllers/PostitController');
 const HistoricosController = require('./controllers/HistoricosController');
+const AgendaController = require('./controllers/AgendaController');
 
 routes.get('/', (request, response) => {
     response.json({
@@ -125,5 +126,8 @@ routes.get('/perPostit/:datIni/:datFin', PostitController.perPostit);
 
 routes.get('/denHistorico/:denId', HistoricosController.denHistorico);
 routes.get('/solHistorico/:solId', HistoricosController.solHistorico);
+
+routes.get('/agenda/:idCan/:datAgenda', AgendaController.agenda);
+routes.get('/ageMonth/:idCan/:datAgenda', AgendaController.ageMonth);
 
 module.exports = routes;
