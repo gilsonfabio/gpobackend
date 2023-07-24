@@ -127,7 +127,7 @@ routes.get('/perPostit/:datIni/:datFin', PostitController.perPostit);
 routes.get('/denHistorico/:denId', HistoricosController.denHistorico);
 routes.get('/solHistorico/:solId', HistoricosController.solHistorico);
 
-routes.get('/agenda/:idCan/:datAgenda', AgendaController.agenda);
+routes.get('/agenda/:idCan/:selected', AgendaController.agenda);
 routes.get('/ageMonth/:idCan/:datAgenda', AgendaController.ageMonth);
 
 module.exports = routes;

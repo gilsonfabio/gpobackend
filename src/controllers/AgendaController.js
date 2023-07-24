@@ -4,14 +4,16 @@ module.exports = {
     
     async agenda (request, response) {
         let id = request.params.idCan;
-        let data = request.params.datAgenda;
-        console.log(data);
+        let data = new Date(request.params.selected);
         
+        console.log(data);
+
         let year = data.getFullYear();
         let month = data.getMonth();
         let day = data.getDate();
+
+        let datAgenda = new Date(year,month,day+1);
         
-        let datAgenda = new Date(year,month,day);
         console.log(id, datAgenda);
 
         const agenda = await connection('agenda')
@@ -19,6 +21,10 @@ module.exports = {
         .where('ageDatInicial', datAgenda)
         .select('*');
     
+        if (!agenda) {
+            return response.status(404).send('Não existe agenda cadastrada!');
+        }
+
         console.log(agenda);
 
         return response.json(agenda);
