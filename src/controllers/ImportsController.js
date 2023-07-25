@@ -88,4 +88,25 @@ module.exports = {
         }
     },
 
+    async importContatos(request, response) { 
+        const reader = require('xlsx')
+        const file = reader.readFile("./src/database/json/contatos.xlsx")
+  
+        let data = []
+  
+        const sheets = file.SheetNames
+  
+        for(let i = 0; i < sheets.length; i++)
+        {
+            const temp = reader.utils.sheet_to_json(
+            file.Sheets[file.SheetNames[i]])
+            temp.forEach((res) => {
+                data.push(res)
+            })
+        }
+  
+        console.log(data);
+        return response.status(200).send({status: 'Importação de Contatos com Sucesso!'});
+    },
+
 };
