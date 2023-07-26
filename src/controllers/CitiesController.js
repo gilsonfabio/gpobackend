@@ -4,7 +4,7 @@ module.exports = {
     
     async index (request, response) {
         let nomCity = request.params.city;
-        console.log('procurando...',nomCity)
+        //console.log('procurando...',nomCity)
         const city = await connection('cities')
         .where('citNome', 'like', `%${nomCity.replaceAll('%', '\\%')}%`)
         .join('states', 'stdId', 'cities.citUf')

@@ -52,7 +52,7 @@ module.exports = {
 
     async index(request, response) {
         let id = request.params.idCan;  
-        console.log(id)
+        //console.log(id)
         const contatos = await connection('contatos')
         .where('conCandidato', id)
         .orderBy('conNomCompleto')
@@ -197,11 +197,11 @@ module.exports = {
             celular, 
             email} = request.body;
 
-        console.log(id);   
-        console.log(nomContato);   
-        console.log(cpf);    
-        console.log(celular);   
-        console.log(email);
+        //console.log(id);   
+        //console.log(nomContato);   
+        //console.log(cpf);    
+        //console.log(celular);   
+        //console.log(email);
 
         if (id != '') {    
             const contato = await connection('contatos')

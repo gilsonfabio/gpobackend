@@ -6,7 +6,7 @@ module.exports = {
         const news = await connection('news')
         .select('*');
     
-        console.log(news);
+        //console.log(news);
         
         return response.json(news);
     }, 

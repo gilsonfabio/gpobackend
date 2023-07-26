@@ -10,7 +10,7 @@ module.exports = {
         .join('contatos', 'conId', 'solicitacoes.solContato')
         .join('tipos', 'tipId', 'solicitacoes.solTipo')
         .orderBy('solAbertura')
-        .select(['solicitacoes.solId', 'solicitacoes.solTitulo', 'solicitacoes.solAbertura', 'solicitacoes.solTipo', 'contatos.conNomCompleto', 'tipos.tipDescricao']);
+        .select(['solicitacoes.solId', 'solicitacoes.solTitulo', 'solicitacoes.solAbertura', 'solicitacoes.solTipo', 'solicitacoes.solNews', 'contatos.conNomCompleto', 'tipos.tipDescricao']);
     
         return response.json(solicitacoes);
     }, 
@@ -19,8 +19,7 @@ module.exports = {
         const {solIdServ, solTipo, solContato, solTitulo, solDescricao, solCandidato, solEspecializacao} = request.body;
         let solStatus = 'A';
         let solAbertura = new Date();
-        
-        console.log(request.body);
+        //console.log(request.body);
 
         const [solId] = await connection('solicitacoes').insert({
             solIdServ, 
@@ -31,7 +30,7 @@ module.exports = {
             solCandidato, 
             solEspecializacao,
             solAbertura,
-            solStatus           
+            solStatus,
         });
            
         return response.json({solId});

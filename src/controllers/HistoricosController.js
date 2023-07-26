@@ -11,6 +11,12 @@ module.exports = {
         .orderBy('hdeData', 'desc')
         .select('*');
     
+        let qtdNews = 0;
+        await connection('denuncias').where('denId', id)   
+        .update({
+            denNews: qtdNews                
+        });
+
         return response.json(denHist);
     },   
         
@@ -21,6 +27,12 @@ module.exports = {
         .where('hsoSolId', id)
         .orderBy('hsoData', 'desc')
         .select('*');
+
+        let qtdNews = 0;
+        await connection('solicitacoes').where('solId', id)   
+        .update({
+            solNews: qtdNews                
+        });
     
         return response.json(solHist);
     },  

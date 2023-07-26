@@ -6,7 +6,7 @@ module.exports = {
         let id = request.params.idCan;
         let data = new Date(request.params.selected);
         
-        console.log(data);
+        //console.log(data);
 
         let year = data.getFullYear();
         let month = data.getMonth();
@@ -14,7 +14,7 @@ module.exports = {
 
         let datAgenda = new Date(year,month,day+1);
         
-        console.log(id, datAgenda);
+        //console.log(id, datAgenda);
 
         const agenda = await connection('agenda')
         .where('ageCanId', id)
@@ -25,7 +25,7 @@ module.exports = {
             return response.status(404).send('Não existe agenda cadastrada!');
         }
 
-        console.log(agenda);
+        //console.log(agenda);
 
         return response.json(agenda);
     }, 
@@ -45,7 +45,7 @@ module.exports = {
         .where('ageDatInicial', '<=', lastDay)
         .select('*');
     
-        console.log(mensal);
+        //console.log(mensal);
 
         return response.json(mensal);
     }, 

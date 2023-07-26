@@ -41,7 +41,7 @@ module.exports = {
             usrUrlPhoto: user.admUrlPhoto
         }
 
-        console.log(dados);
+        //console.log(dados);
 
         let refreshIdToken = uuidv4(); 
                 
