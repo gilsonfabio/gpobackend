@@ -76,6 +76,7 @@ routes.post('/signInCon', ContatosController.signIn);
 routes.post('/newcontato', ContatosController.create);
 routes.put('/updcontato/:idCon', ContatosController.updContato);
 routes.post('/searchContato', ContatosController.searchContato);
+routes.post('/ctoMobile', ContatosController.ctoMobile);
 
 routes.get('/solContato/:idCon', SolicitacoesController.solContato);
 routes.post('/newSolicitacao', SolicitacoesController.newSolicitacao);
@@ -111,6 +112,7 @@ routes.get('/news', NewsController.index);
 
 routes.get('/candidato', CandidatoController.index);
 routes.get('/searchCandidato/:candidato', CandidatoController.searchCandidato);
+routes.get('/accessCandidato/:candidato', CandidatoController.accessCandidato);
 
 routes.post('/geraUfs', ImportsController.gerUfs);
 routes.post('/geraCities/:uf', ImportsController.importCities);

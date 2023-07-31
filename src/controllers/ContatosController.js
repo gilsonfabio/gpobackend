@@ -127,6 +127,39 @@ module.exports = {
         return response.json({conId});
     },
 
+    async ctoMobile(request, response) {
+        const {
+            candidato,
+            email, 
+            nome, 
+            celular, 
+            password, 
+            pushToken } = request.body;
+        var status = 'A'; 
+
+        const contato = await connection('contatos')
+        .where('conEmail', email)
+        .select('conNomCompleto');
+
+        if (contato) {
+            return response.status(200).json({ error: 'Email já cadastrado para outro contato! Favor verificar.'});
+        }
+
+        let snhCrypt = await bcrypt.hash(password, saltRounds);
+
+        const [conId] = await connection('contatos').insert({
+            conCandidato: candidato, 
+            conNomCompleto: nome, 
+            conCelular: celular, 
+            conEmail: email, 
+            conPushToken: pushToken,
+            conPassword: snhCrypt, 
+            conStatus: status
+        });
+           
+        return response.status(204).json({ error: 'Cadastro de usuário realizado com sucesso!'});
+    },
+
     async updContato(request, response) {
         let id = request.params.idCon;         
         const {
@@ -186,7 +219,7 @@ module.exports = {
             conPassword
         });
            
-        return response.status(204).send();
+        return response.status(203).json({ error: 'Cadastro de usuário atualizado com sucesso!'});
     },
 
     async searchContato (request, response) {

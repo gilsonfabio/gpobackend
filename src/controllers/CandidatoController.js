@@ -22,5 +22,17 @@ module.exports = {
         //console.log(candidato)
 
         return response.json(candidato);
-    },    
+    },
+    
+    async accessCandidato (request, response) {
+        let id = request.params.candidato;
+
+        const candidato = await connection('candidatos')
+        .where('canId', id)
+        .select('*');
+    
+        //console.log(candidato)
+
+        return response.json(candidato);
+    },
 };
