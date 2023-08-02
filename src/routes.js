@@ -117,6 +117,7 @@ routes.get('/accessCandidato/:candidato', CandidatoController.accessCandidato);
 routes.post('/geraUfs', ImportsController.gerUfs);
 routes.post('/geraCities/:uf', ImportsController.importCities);
 routes.post('/geraContatos', ImportsController.importContatos);
+routes.post('/impContatos', ImportsController.impContatos);
 
 routes.get('/cities/:city', CitiesController.index);
 routes.get('/cityIbge/:city', CitiesController.cityIbge);
