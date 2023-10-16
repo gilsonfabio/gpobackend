@@ -96,6 +96,18 @@ module.exports = {
         let status = 'A'; 
         //let snhCrypt = await bcrypt.hash(conPassword, saltRounds);
         
+        let year = conNascimento.getFullYear();
+        let month = conNascimento.getMonth();
+        let day = conNascimento.getDate();
+
+        let datNasc = new Date(year,month,day+1);
+
+        let yearCon = conNasConjuge.getFullYear();
+        let monthCon = conNasConjuge.getMonth();
+        let dayCon = conNasConjuge.getDate();
+
+        let datNasConjuge = new Date(yearCon,monthCon,dayCon+1);
+        
         const [conId] = await connection('contatos').insert({
             conCandidato, 
             conNomCompleto, 
@@ -118,12 +130,12 @@ module.exports = {
             conUf, 
             conCep,
             conComplemento, 
-            conNascimento, 
+            conNascimento: datNasc, 
             conPai, 
             conMae, 
             conEstCivil, 
             conConjuge, 
-            conNasConjuge, 
+            conNasConjuge: datNasConjuge, 
             conInfluencia, 
             conLatitude, 
             conLongitude, 
@@ -197,6 +209,19 @@ module.exports = {
             conLatitude, 
             conLongitude, 
             conPassword} = request.body;
+
+        let year = conNascimento.getFullYear();
+        let month = conNascimento.getMonth();
+        let day = conNascimento.getDate();
+
+        let datNasc = new Date(year,month,day+1);
+
+        let yearCon = conNasConjuge.getFullYear();
+        let monthCon = conNasConjuge.getMonth();
+        let dayCon = conNasConjuge.getDate();
+
+        let datNasConjuge = new Date(yearCon,monthCon,dayCon+1);
+
         await connection('contatos').where('conId', id)   
         .update({
             conNomCompleto, 
@@ -217,12 +242,12 @@ module.exports = {
             conUf, 
             conCep,
             conComplemento, 
-            conNascimento, 
+            conNascimento: datNasc, 
             conPai, 
             conMae, 
             conEstCivil, 
             conConjuge, 
-            conNasConjuge, 
+            conNasConjuge: datNasConjuge, 
             conInfluencia, 
             conLatitude, 
             conLongitude, 
