@@ -96,34 +96,6 @@ module.exports = {
         let status = 'A'; 
         //let snhCrypt = await bcrypt.hash(conPassword, saltRounds);
         
-        let idBairro = request.body.conBairro;
-        let desBairro = request.body.baiDescricao;
-        let idCidade = request.body.conCidade;
-        let desCidade = request.body.cidDescricao;    
-        const bairro = await connection('bairros')
-            .where('baiId', idBairro)
-            .select('*')
-            .first();
-
-        if (!bairro) {    
-            const [baiId] = await connection('bairros').insert({
-                baiDescricao: desBairro,
-                baiCidId: idCidade                 
-            })        
-        }    
-
-        const cidade = await connection('cidades')
-            .where('cidId', idCidade)
-            .select('*')
-            .first();
-
-        if (!cidade) {    
-            const [cidId] = await connection('cidades').insert({
-                cidDescricao: desCidade,
-                cidUfId: conUf,                
-            })        
-        }    
-
         const [conId] = await connection('contatos').insert({
             conCandidato, 
             conNomCompleto, 
