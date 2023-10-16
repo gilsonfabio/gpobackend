@@ -95,18 +95,30 @@ module.exports = {
             conLongitude} = request.body;
         let status = 'A'; 
         //let snhCrypt = await bcrypt.hash(conPassword, saltRounds);
+           
+        //console.log('Antes:',conNascimento)
+        let day = parseInt(conNascimento.substring(0,2));
+        let month = parseInt(conNascimento.substring(3,5));
+        let year = parseInt(conNascimento.substring(6,10));
         
-        let year = conNascimento.getFullYear();
-        let month = conNascimento.getMonth();
-        let day = conNascimento.getDate();
+        //console.log('Dia:',day)
+        //console.log('Mes:',month)
+        //console.log('Ano:',year)
 
-        let datNasc = new Date(year,month,day+1);
+        let datNasc = new Date(year, month - 1, day);
+        //console.log('Depois:',datNasc)
 
-        let yearCon = conNasConjuge.getFullYear();
-        let monthCon = conNasConjuge.getMonth();
-        let dayCon = conNasConjuge.getDate();
+        //console.log('Antes:',conNasConjuge)
+        let dayCon = parseInt(conNasConjuge.substring(0,2));
+        let monthCon = parseInt(conNasConjuge.substring(3,5));
+        let yearCon = parseInt(conNasConjuge.substring(6,10));
+        
+        //console.log('Dia:',dayCon)
+        //console.log('Mes:',monthCon)
+        //console.log('Ano:',yearCon)
 
-        let datNasConjuge = new Date(yearCon,monthCon,dayCon+1);
+        let datNasConjuge = new Date(yearCon, monthCon - 1, dayCon);
+        //console.log('Depois:',datNasConjuge)
         
         const [conId] = await connection('contatos').insert({
             conCandidato, 
