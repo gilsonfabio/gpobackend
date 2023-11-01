@@ -288,41 +288,67 @@ module.exports = {
             .where('conId', id )
             .orderBy('conNomCompleto')
             .select('*');
+
+            if (!contato) {
+                return response.status(404).send({erro: true, msn: 'Contato não localizado!'});
+            }
+    
+            return response.json(contato);
         }else {
             if (!id && nomContato && !cpf && !celular && !email) {
                 const contato = await connection('contatos')
-                .where('conNomCompleto', like, `%${nomContato.replaceAll('%', '\\%')}%`)
+                .where('conNomCompleto', 'like', `%${nomContato.replaceAll('%', '\\%')}%`)
                 .orderBy('conNomCompleto')
                 .select('*');
+
+                if (!contato) {
+                    return response.status(404).send({erro: true, msn: 'Contato não localizado!'});
+                }
+        
+                return response.json(contato);
             }else {
                 if (!id && !nomContato && cpf && !celular && !email) {
                     const contato = await connection('contatos')
                     .where('conCpf', cpf)
                     .orderBy('conNomCompleto')
                     .select('*');
+
+                    if (!contato) {
+                        return response.status(404).send({erro: true, msn: 'Contato não localizado!'});
+                    }
+            
+                    return response.json(contato);
                 }else {
                     if (!id && !nomContato && !cpf && celular && !email) {
                         const contato = await connection('contatos')
                         .where('conCelular', celular)
                         .orderBy('conNomCompleto')
                         .select('*');
+
+                        if (!contato) {
+                            return response.status(404).send({erro: true, msn: 'Contato não localizado!'});
+                        }
+                
+                        return response.json(contato);
                     }else {
                         if (!id && !nomContato && !cpf && !celular && email) {
                             const contato = await connection('contatos')
                             .where('conEmail', email)
                             .orderBy('conNomCompleto')
                             .select('*');
+
+                            if (!contato) {
+                                return response.status(404).send({erro: true, msn: 'Contato não localizado!'});
+                            }
+                    
+                            return response.json(contato);
                         }    
                     }    
                 }
             }
         } 
 
-        if (!contato) {
-            return response.status(404).send({erro: true, msn: 'Contato não localizado!'});
-        }
-
-        return response.json(contato);
+        
     },
     
 };
