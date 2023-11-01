@@ -283,31 +283,31 @@ module.exports = {
         //console.log(celular);   
         //console.log(email);
 
-        if (id != '') {    
+        if (id && !nomContato && !cpf && !celular && !email) {    
             const contato = await connection('contatos')
             .where('conId', id )
             .orderBy('conNomCompleto')
             .select('*');
         }else {
-            if (nomContato != '') {
+            if (!id && nomContato && !cpf && !celular && !email) {
                 const contato = await connection('contatos')
                 .where('conNomCompleto', like, `%${nomContato.replaceAll('%', '\\%')}%`)
                 .orderBy('conNomCompleto')
                 .select('*');
             }else {
-                if (cpf != '') {
+                if (!id && !nomContato && cpf && !celular && !email) {
                     const contato = await connection('contatos')
                     .where('conCpf', cpf)
                     .orderBy('conNomCompleto')
                     .select('*');
                 }else {
-                    if (celular != '') {
+                    if (!id && !nomContato && !cpf && celular && !email) {
                         const contato = await connection('contatos')
                         .where('conCelular', celular)
                         .orderBy('conNomCompleto')
                         .select('*');
                     }else {
-                        if (email != '') {
+                        if (!id && !nomContato && !cpf && !celular && email) {
                             const contato = await connection('contatos')
                             .where('conEmail', email)
                             .orderBy('conNomCompleto')
