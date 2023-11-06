@@ -74,7 +74,7 @@ routes.get('/especializacoes', EspecializacoesController.index);
 routes.get('/contatos/:idCan', ContatosController.index);
 routes.post('/signInCon', ContatosController.signIn);
 routes.post('/newcontato', ContatosController.create);
-routes.put('/updcontato/:idCon', ContatosController.updContato);
+routes.put('/updContato/:idCon', ContatosController.updContato);
 routes.post('/searchContato', ContatosController.searchContato);
 routes.post('/ctoMobile', ContatosController.ctoMobile);
 

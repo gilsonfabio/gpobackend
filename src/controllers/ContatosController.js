@@ -222,15 +222,15 @@ module.exports = {
             conLongitude, 
             conPassword} = request.body;
 
-        let year = conNascimento.getFullYear();
-        let month = conNascimento.getMonth();
-        let day = conNascimento.getDate();
+        let year = conNascimento.substring(6, 10);
+        let month = conNascimento.substring(3,5);
+        let day = conNascimento.substring(0,2);
 
         let datNasc = new Date(year,month,day+1);
 
-        let yearCon = conNasConjuge.getFullYear();
-        let monthCon = conNasConjuge.getMonth();
-        let dayCon = conNasConjuge.getDate();
+        let yearCon = conNasConjuge.substring(6, 10);
+        let monthCon = conNasConjuge.substring(3,5);
+        let dayCon = conNasConjuge.substring(0,2);
 
         let datNasConjuge = new Date(yearCon,monthCon,dayCon+1);
 
