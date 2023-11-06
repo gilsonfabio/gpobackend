@@ -226,13 +226,13 @@ module.exports = {
         let month = conNascimento.substring(3,5);
         let day = conNascimento.substring(0,2);
 
-        let datNasc = new Date(year,month,day+1);
+        let datNasc = new Date(year, month - 1, day);
 
         let yearCon = conNasConjuge.substring(6, 10);
         let monthCon = conNasConjuge.substring(3,5);
         let dayCon = conNasConjuge.substring(0,2);
 
-        let datNasConjuge = new Date(yearCon,monthCon,dayCon+1);
+        let datNasConjuge = new Date(yearCon, monthCon - 1, dayCon);
 
         await connection('contatos').where('conId', id)   
         .update({
@@ -266,7 +266,7 @@ module.exports = {
             conPassword
         });
            
-        return response.status(203).json({ error: 'Cadastro de usuário atualizado com sucesso!'});
+        return response.status(203).json({ success: 'Cadastro de usuário atualizado com sucesso!'});
     },
 
     async searchContato (request, response) {
