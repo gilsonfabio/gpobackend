@@ -11,7 +11,9 @@ const {v4:uuidv4} = require ('uuid') ;
 module.exports = {       
     
     async index (request, response) {
+        let id = request.params.idAdm;    
         const postit = await connection('postit')
+        .where('posAdmId', id)
         .orderBy('posData')
         .select('*');
     

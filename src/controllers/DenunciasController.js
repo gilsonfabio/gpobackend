@@ -3,6 +3,20 @@ const connection = require('../database/connection');
 
 module.exports = {       
     
+    async index (request, response) {
+        let id = request.params.idCan;  
+        const denuncias = await connection('denuncias')
+        .where('denCandidato', id)
+        .join('contatos', 'conId', 'denuncias.denConId')
+        .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+        .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+        .orderBy('denData')
+        .select(['denuncias.denId', 'denuncias.denDescricao', 'denuncias.denData', 'denuncias.denTipo', 'denuncias.denNews', 'denuncias.denSubId', 'contatos.conNomCompleto', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao']);
+    
+        return response.json(denuncias);    
+
+    },
+
     async denContato (request, response) {
         let id = request.params.idCon;
         const denuncias = await connection('denuncias')

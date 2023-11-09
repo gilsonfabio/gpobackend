@@ -78,9 +78,11 @@ routes.put('/updContato/:idCon', ContatosController.updContato);
 routes.post('/searchContato', ContatosController.searchContato);
 routes.post('/ctoMobile', ContatosController.ctoMobile);
 
+routes.get('/solicitacoes/:idCan', SolicitacoesController.index);
 routes.get('/solContato/:idCon', SolicitacoesController.solContato);
 routes.post('/newSolicitacao', SolicitacoesController.newSolicitacao);
 
+routes.get('/denuncias/:idCan', DenunciasController.index);
 routes.get('/denContato/:idCon', DenunciasController.denContato);
 routes.post('/newDenuncia', DenunciasController.newDenuncia);
 routes.get('/tipdenuncias', DenunciasController.tipDenuncias);
@@ -122,7 +124,7 @@ routes.post('/impContatos', ImportsController.impContatos);
 routes.get('/cities/:city', CitiesController.index);
 routes.get('/cityIbge/:city', CitiesController.cityIbge);
 
-routes.get('/postit', PostitController.index);
+routes.get('/postit/:idAdm', PostitController.index);
 routes.post('/newpostit', PostitController.create);
 routes.put('/updpostit/:idPos', PostitController.updPostit);
 routes.get('/searchPostit/:idPos', PostitController.searchPostit);
