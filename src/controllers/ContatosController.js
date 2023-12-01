@@ -222,7 +222,8 @@ module.exports = {
             conInfluencia, 
             conLatitude, 
             conLongitude, 
-            conPassword} = request.body;
+            conPassword,
+            conStatus} = request.body;
 
         let year = conNascimento.substring(6, 10);
         let month = conNascimento.substring(3,5);
@@ -265,7 +266,8 @@ module.exports = {
             conInfluencia, 
             conLatitude, 
             conLongitude, 
-            conPassword
+            conPassword,
+            conStatus
         });
            
         return response.status(203).json({ success: 'Cadastro de usuário atualizado com sucesso!'});
@@ -284,10 +286,12 @@ module.exports = {
         //console.log(cpf);    
         //console.log(celular);   
         //console.log(email);
+        let status = "A" 
 
         if (id && !nomContato && !cpf && !celular && !email) {    
             const contato = await connection('contatos')
             .where('conId', id )
+            .where('conStatus', status)
             .orderBy('conNomCompleto')
             .select('*');
 
@@ -300,6 +304,7 @@ module.exports = {
             if (!id && nomContato && !cpf && !celular && !email) {
                 const contato = await connection('contatos')
                 .where('conNomCompleto', 'like', `%${nomContato.replaceAll('%', '\\%')}%`)
+                .where('conStatus', status)
                 .orderBy('conNomCompleto')
                 .select('*');
 
@@ -312,6 +317,7 @@ module.exports = {
                 if (!id && !nomContato && cpf && !celular && !email) {
                     const contato = await connection('contatos')
                     .where('conCpf', cpf)
+                    .where('conStatus', status)
                     .orderBy('conNomCompleto')
                     .select('*');
 
@@ -324,6 +330,7 @@ module.exports = {
                     if (!id && !nomContato && !cpf && celular && !email) {
                         const contato = await connection('contatos')
                         .where('conCelular', celular)
+                        .where('conStatus', status)
                         .orderBy('conNomCompleto')
                         .select('*');
 
@@ -336,6 +343,7 @@ module.exports = {
                         if (!id && !nomContato && !cpf && !celular && email) {
                             const contato = await connection('contatos')
                             .where('conEmail', email)
+                            .where('conStatus', status)
                             .orderBy('conNomCompleto')
                             .select('*');
 
@@ -349,7 +357,6 @@ module.exports = {
                 }
             }
         } 
-
         
     },
     
