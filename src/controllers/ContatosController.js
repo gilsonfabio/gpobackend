@@ -51,10 +51,12 @@ module.exports = {
     },
 
     async index(request, response) {
-        let id = request.params.idCan;  
+        let id = request.params.idCan; 
+        let status = 'A'; 
         //console.log(id)
         const contatos = await connection('contatos')
         .where('conCandidato', id)
+        .where('conStatus', status)
         .orderBy('conNomCompleto')
         .select('*');
     
