@@ -193,7 +193,7 @@ module.exports = {
     },
 
     async updContato(request, response) {
-        let id = request.params.idCon;         
+        let id = request.params.conId;         
         const {
             conNomCompleto, 
             conGenero, 
