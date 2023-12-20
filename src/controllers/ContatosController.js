@@ -225,12 +225,15 @@ module.exports = {
             conPassword,
             conStatus} = request.body;
 
+        let datNasc = new Date();
+        let datNasConjuge = new Date();
+
         if (conNascimento) {    
             let year = conNascimento.substring(6, 10);
             let month = conNascimento.substring(3,5);
             let day = conNascimento.substring(0,2);
         
-            let datNasc = new Date(year, month - 1, day);
+            datNasc = new Date(year, month - 1, day);
         }
 
         if (conNasConjuge) {
@@ -238,7 +241,7 @@ module.exports = {
             let monthCon = conNasConjuge.substring(3,5);
             let dayCon = conNasConjuge.substring(0,2);
 
-            let datNasConjuge = new Date(yearCon, monthCon - 1, dayCon);
+            datNasConjuge = new Date(yearCon, monthCon - 1, dayCon);
         }
 
         await connection('contatos').where('conId', id)   
