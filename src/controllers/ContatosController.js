@@ -98,30 +98,41 @@ module.exports = {
         let status = 'A'; 
         //let snhCrypt = await bcrypt.hash(conPassword, saltRounds);
            
-        //console.log('Antes:',conNascimento)
-        let day = parseInt(conNascimento.substring(0,2));
-        let month = parseInt(conNascimento.substring(3,5));
-        let year = parseInt(conNascimento.substring(6,10));
-        
-        //console.log('Dia:',day)
-        //console.log('Mes:',month)
-        //console.log('Ano:',year)
 
-        let datNasc = new Date(year, month - 1, day);
-        //console.log('Depois:',datNasc)
+        let datNasc = new Date();
+        let datNasConjuge = new Date();
 
-        //console.log('Antes:',conNasConjuge)
-        let dayCon = parseInt(conNasConjuge.substring(0,2));
-        let monthCon = parseInt(conNasConjuge.substring(3,5));
-        let yearCon = parseInt(conNasConjuge.substring(6,10));
+        if (conNascimento) {    
+            //console.log('Antes:',conNascimento)
+            let day = parseInt(conNascimento.substring(0,2));
+            let month = parseInt(conNascimento.substring(3,5));
+            let year = parseInt(conNascimento.substring(6,10));
         
-        //console.log('Dia:',dayCon)
-        //console.log('Mes:',monthCon)
-        //console.log('Ano:',yearCon)
+            //console.log('Dia:',day)
+            //console.log('Mes:',month)
+            //console.log('Ano:',year)
 
-        let datNasConjuge = new Date(yearCon, monthCon - 1, dayCon);
-        //console.log('Depois:',datNasConjuge)
+            datNasc = new Date(year, month - 1, day);
+            //console.log('Depois:',datNasc)
+        }else {
+            datNasc = null;
+        }
+
+        if (conNasConjuge) {
+            //console.log('Antes:',conNasConjuge)
+            let dayCon = parseInt(conNasConjuge.substring(0,2));
+            let monthCon = parseInt(conNasConjuge.substring(3,5));
+            let yearCon = parseInt(conNasConjuge.substring(6,10));
         
+            //console.log('Dia:',dayCon)
+            //console.log('Mes:',monthCon)
+            //console.log('Ano:',yearCon)
+
+            datNasConjuge = new Date(yearCon, monthCon - 1, dayCon);
+            //console.log('Depois:',datNasConjuge)
+        }else {
+            datNasConjuge = null; 
+        }
         const [conId] = await connection('contatos').insert({
             conCandidato, 
             conNomCompleto, 
@@ -234,6 +245,8 @@ module.exports = {
             let day = conNascimento.substring(0,2);
         
             datNasc = new Date(year, month - 1, day);
+        }else {
+            datNasc = null;
         }
 
         if (conNasConjuge) {
@@ -242,6 +255,8 @@ module.exports = {
             let dayCon = conNasConjuge.substring(0,2);
 
             datNasConjuge = new Date(yearCon, monthCon - 1, dayCon);
+        }else {
+            datNasConjuge = null;
         }
 
         await connection('contatos').where('conId', id)   
