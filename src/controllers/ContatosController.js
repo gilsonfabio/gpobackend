@@ -60,7 +60,7 @@ module.exports = {
         .orderBy('conNomCompleto')
         .select('*');
     
-        return response.json({contatos});
+        return response.json(contatos);
     }, 
 
     async create(request, response) {

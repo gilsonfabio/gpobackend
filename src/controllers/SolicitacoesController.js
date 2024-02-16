@@ -10,6 +10,8 @@ module.exports = {
         .join('contatos', 'conId', 'solicitacoes.solContato')
         .join('tipos', 'tipId', 'solicitacoes.solTipo')
         .join('services', 'srvId', 'solicitacoes.solIdServ')
+        .limit(10)
+        .orderBy('solId', 'desc')
         .select(['solicitacoes.*', 'tipos.tipDescricao', 'services.srvDescricao', 'contatos.conNomCompleto']);
     
         return response.json(solicitacoes);
