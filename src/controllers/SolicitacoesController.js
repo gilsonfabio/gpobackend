@@ -49,6 +49,131 @@ module.exports = {
            
         return response.json({solId});
     },
+
+    async searchSolicitacoes (request, response) {
+        const {
+            candidato,
+            contato,
+            abertura,
+            tipos} = request.body;
+
+        //console.log(id);   
+        //console.log(nomContato);   
+        //console.log(cpf);    
+        //console.log(celular);   
+        //console.log(email);
+        let status = "A" 
+
+        if (!contato && !abertura && !tipos) {    
+            const solicitacao = await connection('solicitacoes')
+            .where('solCandidato', candidato )
+            .where('conStatus', status)
+            .join('contatos', 'conId', 'solicitacoes.solContato')
+            .join('tipos', 'tipId', 'solicitacoes.solTipo')
+            .join('services', 'srvId', 'solicitacoes.solIdServ')
+            .orderBy('solAbertura', 'desc')
+            .select(['solicitacoes.*', 'tipos.tipDescricao', 'services.srvDescricao', 'contatos.conNomCompleto']);
+
+            if (!solicitacao) {
+                return response.status(404).send({erro: true, msn: 'Solicitações não localizadas!'});
+            }
+    
+            return response.json(solicitacao);
+        }else {
+            if (contato && !abertura && !tipos) {
+                const solicitacao = await connection('solicitacoes')
+                .where('solCandidato', candidato )
+                .where('solContato', contato)
+                .where('conStatus', status)
+                .join('contatos', 'conId', 'solicitacoes.solContato')
+                .join('tipos', 'tipId', 'solicitacoes.solTipo')
+                .join('services', 'srvId', 'solicitacoes.solIdServ')
+                .orderBy('solAbertura', 'desc')
+                .select(['solicitacoes.*', 'tipos.tipDescricao', 'services.srvDescricao', 'contatos.conNomCompleto']);
+
+                if (!solicitacao) {
+                    return response.status(404).send({erro: true, msn: 'Solicitações não localizadas!'});
+                }
+        
+                return response.json(solicitacao);
+            }else {
+                if (!contato && abertura && !tipos) {
+                    const solicitacao = await connection('solicitacoes')
+                    .where('solCandidato', candidato )
+                    .where('solAbertura', abertura)
+                    .where('conStatus', status)
+                    .join('contatos', 'conId', 'solicitacoes.solContato')
+                    .join('tipos', 'tipId', 'solicitacoes.solTipo')
+                    .join('services', 'srvId', 'solicitacoes.solIdServ')
+                    .orderBy('solAbertura', 'desc')
+                    .select(['solicitacoes.*', 'tipos.tipDescricao', 'services.srvDescricao', 'contatos.conNomCompleto']);
+
+                    if (!solicitacao) {
+                        return response.status(404).send({erro: true, msn: 'Solicitações não localizadas!'});
+                    }
+        
+                    return response.json(solicitacao);
+                }else {
+                    if (!contato && !abertura && tipos) {
+                        const solicitacao = await connection('solicitacoes')
+                        .where('solCandidato', candidato )
+                        .whereIn('solTipo', tipos)
+                        .where('conStatus', status)
+                        .join('contatos', 'conId', 'solicitacoes.solContato')
+                        .join('tipos', 'tipId', 'solicitacoes.solTipo')
+                        .join('services', 'srvId', 'solicitacoes.solIdServ')
+                        .orderBy('solAbertura', 'desc')
+                        .select(['solicitacoes.*', 'tipos.tipDescricao', 'services.srvDescricao', 'contatos.conNomCompleto']);
+
+                        if (!solicitacao) {
+                            return response.status(404).send({erro: true, msn: 'Solicitações não localizadas!'});
+                        }
+        
+                        return response.json(solicitacao);
+                    }else {
+                        if (contato && abertura && !tipos) {
+                            const solicitacao = await connection('solicitacoes')
+                            .where('solCandidato', candidato )
+                            .where('solContato', contato)
+                            .where('solAbertura', abertura)
+                            .where('conStatus', status)
+                            .join('contatos', 'conId', 'solicitacoes.solContato')
+                            .join('tipos', 'tipId', 'solicitacoes.solTipo')
+                            .join('services', 'srvId', 'solicitacoes.solIdServ')
+                            .orderBy('solAbertura', 'desc')
+                            .select(['solicitacoes.*', 'tipos.tipDescricao', 'services.srvDescricao', 'contatos.conNomCompleto']);
+
+                            if (!solicitacao) {
+                                return response.status(404).send({erro: true, msn: 'Solicitações não localizadas!'});
+                            }
+        
+                            return response.json(solicitacao);
+                        }else {
+                            if (!contato && abertura && tipos) {
+                                const solicitacao = await connection('solicitacoes')
+                                .where('solCandidato', candidato )
+                                .where('solAbertura', abertura)
+                                .whereIn('solTipo', tipos)
+                                .where('conStatus', status)
+                                .join('contatos', 'conId', 'solicitacoes.solContato')
+                                .join('tipos', 'tipId', 'solicitacoes.solTipo')
+                                .join('services', 'srvId', 'solicitacoes.solIdServ')
+                                .orderBy('solAbertura', 'desc')
+                                .select(['solicitacoes.*', 'tipos.tipDescricao', 'services.srvDescricao', 'contatos.conNomCompleto']);
+    
+                                if (!solicitacao) {
+                                    return response.status(404).send({erro: true, msn: 'Solicitações não localizadas!'});
+                                }
+            
+                                return response.json(solicitacao);
+                            }
+                        }    
+                    }    
+                }
+            }
+        } 
+        
+    },
 };
 
 
