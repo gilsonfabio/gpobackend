@@ -77,11 +77,14 @@ routes.post('/newcontato', ContatosController.create);
 routes.put('/updContato/:conId', ContatosController.updContato);
 routes.post('/searchContato', ContatosController.searchContato);
 routes.post('/ctoMobile', ContatosController.ctoMobile);
+routes.get('/buscontatos/:idCan', ContatosController.busContatos);
+
 
 routes.get('/solicitacoes/:idCan', SolicitacoesController.index);
 routes.get('/solContato/:idCon', SolicitacoesController.solContato);
 routes.post('/newSolicitacao', SolicitacoesController.newSolicitacao);
 routes.post('/searchSolicitacoes', SolicitacoesController.searchSolicitacoes);
+
 
 routes.get('/denuncias/:idCan', DenunciasController.index);
 routes.get('/denContato/:idCon', DenunciasController.denContato);

@@ -64,6 +64,20 @@ module.exports = {
         return response.json({contatos});
     }, 
 
+    async busContatos(request, response) {
+        let id = request.params.idCan; 
+        let status = 'A'; 
+        //console.log('Candidato',id)
+        const contatos = await connection('contatos')
+        .where('conCandidato', id)
+        .where('conStatus', status)
+        .orderBy('conNomCompleto')
+        .select('*');
+    
+        //console.log(contatos);
+        return response.json(contatos);
+    }, 
+
     async create(request, response) {
         const {
             conCandidato, 
