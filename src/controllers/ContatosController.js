@@ -53,14 +53,15 @@ module.exports = {
     async index(request, response) {
         let id = request.params.idCan; 
         let status = 'A'; 
-        //console.log(id)
+        //console.log('Candidato',id)
         const contatos = await connection('contatos')
         .where('conCandidato', id)
         .where('conStatus', status)
         .orderBy('conNomCompleto')
         .select('*');
     
-        return response.json(contatos);
+        //console.log(contatos);
+        return response.json({contatos});
     }, 
 
     async create(request, response) {

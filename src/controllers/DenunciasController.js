@@ -11,7 +11,7 @@ module.exports = {
         .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
         .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
         .orderBy('denData')
-        .select(['denuncias.denId', 'denuncias.denDescricao', 'denuncias.denData', 'denuncias.denTipo', 'denuncias.denNews', 'denuncias.denSubId', 'contatos.conNomCompleto', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao']);
+        .select(['denuncias.*', 'contatos.conNomCompleto', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao']);
     
         return response.json(denuncias);    
 
