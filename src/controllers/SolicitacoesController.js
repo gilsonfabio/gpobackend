@@ -57,14 +57,12 @@ module.exports = {
             abertura,
             tipos} = request.body;
 
-        //console.log(id);   
-        //console.log(nomContato);   
-        //console.log(cpf);    
-        //console.log(celular);   
-        //console.log(email);
+        //console.log(request.body);
+        
         let status = "A" 
 
-        if (!contato && !abertura && !tipos) {    
+        if (!contato && !abertura && !tipos) { 
+            //console.log('opção-1')   
             const solicitacao = await connection('solicitacoes')
             .where('solCandidato', candidato )
             .where('conStatus', status)
@@ -81,6 +79,7 @@ module.exports = {
             return response.json(solicitacao);
         }else {
             if (contato && !abertura && !tipos) {
+                //console.log('opção-2')   
                 const solicitacao = await connection('solicitacoes')
                 .where('solCandidato', candidato )
                 .where('solContato', contato)
@@ -98,6 +97,7 @@ module.exports = {
                 return response.json(solicitacao);
             }else {
                 if (!contato && abertura && !tipos) {
+                    //console.log('opção-3')   
                     const solicitacao = await connection('solicitacoes')
                     .where('solCandidato', candidato )
                     .where('solAbertura', abertura)
@@ -115,9 +115,10 @@ module.exports = {
                     return response.json(solicitacao);
                 }else {
                     if (!contato && !abertura && tipos) {
+                        //console.log('opção-4')   
                         const solicitacao = await connection('solicitacoes')
                         .where('solCandidato', candidato )
-                        .whereIn('solTipo', tipos)
+                        .where('solTipo', tipos)
                         .where('conStatus', status)
                         .join('contatos', 'conId', 'solicitacoes.solContato')
                         .join('tipos', 'tipId', 'solicitacoes.solTipo')
@@ -132,6 +133,7 @@ module.exports = {
                         return response.json(solicitacao);
                     }else {
                         if (contato && abertura && !tipos) {
+                            //console.log('opção-5')   
                             const solicitacao = await connection('solicitacoes')
                             .where('solCandidato', candidato )
                             .where('solContato', contato)
@@ -150,10 +152,11 @@ module.exports = {
                             return response.json(solicitacao);
                         }else {
                             if (!contato && abertura && tipos) {
+                                //console.log('opção-6')   
                                 const solicitacao = await connection('solicitacoes')
                                 .where('solCandidato', candidato )
                                 .where('solAbertura', abertura)
-                                .whereIn('solTipo', tipos)
+                                .where('solTipo', tipos)
                                 .where('conStatus', status)
                                 .join('contatos', 'conId', 'solicitacoes.solContato')
                                 .join('tipos', 'tipId', 'solicitacoes.solTipo')

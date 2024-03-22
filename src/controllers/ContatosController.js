@@ -78,6 +78,19 @@ module.exports = {
         return response.json(contatos);
     }, 
 
+    async busContatoCpf(request, response) {
+        let cpf = request.params.numCpf; 
+        let status = 'A'; 
+        //console.log('Candidato',id)
+        const contato = await connection('contatos')
+        .where('conCpf', cpf)
+        .where('conStatus', status)
+        .select('*');
+    
+        console.log(contato);
+        return response.json(contato);
+    }, 
+
     async create(request, response) {
         const {
             conCandidato, 
@@ -113,7 +126,6 @@ module.exports = {
         let status = 'A'; 
         //let snhCrypt = await bcrypt.hash(conPassword, saltRounds);
            
-
         let datNasc = new Date();
         let datNasConjuge = new Date();
 
