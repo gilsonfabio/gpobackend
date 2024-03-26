@@ -28,6 +28,29 @@ module.exports = {
     
         return response.json(solicitacoes);
     }, 
+
+    async busSolicitacao (request, response) {
+        let id = request.params.idSol;
+        console.log('Solicitacao Id:', id)
+        const solicitacao = await connection('solicitacoes')
+        .where('solId', id)
+        .join('contatos', 'conId', 'solicitacoes.solContato')
+        .join('tipos', 'tipId', 'solicitacoes.solTipo')
+        .orderBy('solAbertura')
+        .select([
+            'solicitacoes.*', 
+            'contatos.conNomCompleto', 
+            'contatos.conCpf',
+            'contatos.conEmail',
+            'contatos.conCelular',
+            'contatos.conId',
+            'contatos.conCandidato',  
+            'tipos.tipDescricao']);
+    
+        console.log(solicitacao)
+            
+        return response.json(solicitacao);
+    }, 
    
     async newSolicitacao(request, response) {
         const {solIdServ, solTipo, solContato, solTitulo, solDescricao, solCandidato, solEspecializacao} = request.body;

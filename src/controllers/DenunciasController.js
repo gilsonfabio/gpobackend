@@ -65,4 +65,19 @@ module.exports = {
     
         return response.json(subtipos);
     },
+
+    async searchDenuncias (request, response) {
+        const id = request.body.candidato;
+
+        const denuncias = await connection('denuncias')
+        .where('denCandidato', id)
+        .join('contatos', 'conId', 'denuncias.denConId')
+        .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+        .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+        .orderBy('denData')
+        .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+    
+        return response.json(denuncias);    
+
+    },
 };
