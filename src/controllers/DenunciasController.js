@@ -80,4 +80,21 @@ module.exports = {
         return response.json(denuncias);    
 
     },
+
+    async busDenuncia (request, response) {
+        const id = request.params.idDen;
+
+        const denuncia = await connection('denuncias')
+        .where('denId', id)
+        .join('contatos', 'conId', 'denuncias.denConId')
+        .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+        .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+        .orderBy('denData')
+        .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto', 'contatos.conEmail', 'contatos.conCelular']);
+         
+        console.log(denuncia)
+
+        return response.json(denuncia);    
+
+    },
 };

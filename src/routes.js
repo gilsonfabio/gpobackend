@@ -24,6 +24,8 @@ const CitiesController = require('./controllers/CitiesController');
 const PostitController = require('./controllers/PostitController');
 const HistoricosController = require('./controllers/HistoricosController');
 const AgendaController = require('./controllers/AgendaController');
+const TipDenController = require('./controllers/TipDenController');
+const SubTipController = require('./controllers/SubTipController');
 
 routes.get('/', (request, response) => {
     response.json({
@@ -71,6 +73,10 @@ routes.get('/utilidades', UtilidadesController.index);
 routes.get('/tipos', TiposController.index);
 routes.get('/especializacoes', EspecializacoesController.index);
 
+routes.get('/tipdenuncias', TipDenController.index);
+
+routes.get('/subtipos', SubTipController.index);
+
 routes.get('/contatos/:idCan', ContatosController.index);
 routes.post('/signInCon', ContatosController.signIn);
 routes.post('/newcontato', ContatosController.create);
@@ -93,6 +99,7 @@ routes.post('/newDenuncia', DenunciasController.newDenuncia);
 routes.get('/tipdenuncias', DenunciasController.tipDenuncias);
 routes.get('/subTipDenuncias', DenunciasController.subTipDenuncias);
 routes.post('/searchDenuncias', DenunciasController.searchDenuncias);
+routes.get('/busDenuncia/:idDen', DenunciasController.busDenuncia);
 
 routes.get('/oportunidades/:tipo', OportunidadesController.oportunidades);
 routes.post('/newOportunidade', OportunidadesController.newOportunidade);
