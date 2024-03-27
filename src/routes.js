@@ -91,6 +91,7 @@ routes.get('/solContato/:idCon', SolicitacoesController.solContato);
 routes.post('/newSolicitacao', SolicitacoesController.newSolicitacao);
 routes.post('/searchSolicitacoes', SolicitacoesController.searchSolicitacoes);
 routes.get('/busSolicitacao/:idSol', SolicitacoesController.busSolicitacao);
+routes.put('/updSolicitacao/:idSol', SolicitacoesController.updSolicitacao);
 
 
 routes.get('/denuncias/:idCan', DenunciasController.index);
@@ -100,6 +101,7 @@ routes.get('/tipdenuncias', DenunciasController.tipDenuncias);
 routes.get('/subTipDenuncias', DenunciasController.subTipDenuncias);
 routes.post('/searchDenuncias', DenunciasController.searchDenuncias);
 routes.get('/busDenuncia/:idDen', DenunciasController.busDenuncia);
+routes.put('/upddenuncia/:idDen', DenunciasController.updDenuncia);
 
 routes.get('/oportunidades/:tipo', OportunidadesController.oportunidades);
 routes.post('/newOportunidade', OportunidadesController.newOportunidade);

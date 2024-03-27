@@ -97,4 +97,30 @@ module.exports = {
         return response.json(denuncia);    
 
     },
+
+    async updDenuncia(request, response) {
+        let id = request.params.denId;         
+        const {
+            denTipo, 
+            denSubId, 
+            denDescricao, 
+            denStatus, 
+            denNome, 
+            denConId, 
+            denFonContato } = request.body;
+
+        await connection('denuncias').where('denId', id)   
+        .update({
+            denTipo, 
+            denSubId, 
+            denDescricao, 
+            denStatus, 
+            denNome, 
+            denConId, 
+            denFonContato            
+        });
+           
+        return response.status(203).json({ success: 'Denuncia atualizada com sucesso!'});
+    },
+
 };

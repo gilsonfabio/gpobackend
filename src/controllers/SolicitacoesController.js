@@ -53,7 +53,7 @@ module.exports = {
     }, 
    
     async newSolicitacao(request, response) {
-        const {solIdServ, solTipo, solContato, solTitulo, solDescricao, solCandidato, solEspecializacao} = request.body;
+        const {solIdServ, solTipo, solContato, solTitulo, solDescricao, solCandidato, solEspecializacao, solPrioridade} = request.body;
         let solStatus = 'A';
         let solAbertura = new Date();
         //console.log(request.body);
@@ -66,6 +66,7 @@ module.exports = {
             solDescricao, 
             solCandidato, 
             solEspecializacao,
+            solPrioridade,
             solAbertura,
             solStatus,
         });
@@ -199,6 +200,33 @@ module.exports = {
             }
         } 
         
+    },
+
+    async updSolicitacao(request, response) {
+        let id = request.params.idSol;         
+        const {
+            solIdServ, 
+            solTipo, 
+            solContato, 
+            solTitulo, 
+            solDescricao, 
+            solCandidato, 
+            solEspecializacao,
+            solPrioridade} = request.body;
+
+        await connection('solicitacoes').where('solId', id)   
+        .update({
+            solIdServ, 
+            solTipo, 
+            solContato, 
+            solTitulo, 
+            solDescricao, 
+            solCandidato, 
+            solEspecializacao,
+            solPrioridade,
+        });
+           
+        return response.status(203).json({ success: 'Solicitação atualizada com sucesso!'});
     },
 };
 
