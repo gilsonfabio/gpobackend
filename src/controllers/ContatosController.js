@@ -57,7 +57,8 @@ module.exports = {
         const contatos = await connection('contatos')
         .where('conCandidato', id)
         .where('conStatus', status)
-        .orderBy('conNomCompleto')
+        .orderBy('conId', 'desc')
+        .limit(15)
         .select('*');
     
         //console.log(contatos);

@@ -67,17 +67,161 @@ module.exports = {
     },
 
     async searchDenuncias (request, response) {
-        const id = request.body.candidato;
-
-        const denuncias = await connection('denuncias')
-        .where('denCandidato', id)
-        .join('contatos', 'conId', 'denuncias.denConId')
-        .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
-        .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
-        .orderBy('denData')
-        .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+        const candidato = request.body.candidato;
+        const contato = request.body.contato;
+        const data = request.body.abertura;
+        const tipo = request.body.tipos;
+        const subtipo =  request.body.subtipo;
+        if (!contato && !data && !tipo && !subtipo) { 
+            const denuncias = await connection('denuncias')
+            .where('denCandidato', candidato)
+            .join('contatos', 'conId', 'denuncias.denConId')
+            .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+            .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+            .orderBy('denData')
+            .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
     
-        return response.json(denuncias);    
+            return response.json(denuncias);    
+        }else {
+            if (contato && !data && !tipo && !subtipo) { 
+                const denuncias = await connection('denuncias')
+                .where('denCandidato', candidato)
+                .where('denConId', contato)
+                .join('contatos', 'conId', 'denuncias.denConId')
+                .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                .orderBy('denData')
+                .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+        
+                return response.json(denuncias);    
+            }else {
+                if (!contato && data && !tipo && !subtipo) { 
+                    const denuncias = await connection('denuncias')
+                    .where('denCandidato', candidato)
+                    .where('denData', data)
+                    .join('contatos', 'conId', 'denuncias.denConId')
+                    .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                    .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                    .orderBy('denData')
+                    .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+            
+                    return response.json(denuncias);    
+                }else {
+                    if (!contato && !data && tipo && !subtipo) { 
+                        const denuncias = await connection('denuncias')
+                        .where('denCandidato', candidato)
+                        .where('denTipo', tipo)
+                        .join('contatos', 'conId', 'denuncias.denConId')
+                        .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                        .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                        .orderBy('denData')
+                        .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+                
+                        return response.json(denuncias);    
+                    }else {
+                        if (!contato && !data && !tipo && subtipo) { 
+                            const denuncias = await connection('denuncias')
+                            .where('denCandidato', candidato)
+                            .where('denSubId', subtipo)
+                            .join('contatos', 'conId', 'denuncias.denConId')
+                            .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                            .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                            .orderBy('denData')
+                            .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+                    
+                            return response.json(denuncias);    
+                        }else {
+                            if (contato && data && !tipo && !subtipo) { 
+                                const denuncias = await connection('denuncias')
+                                .where('denCandidato', candidato)
+                                .where('denConId', contato)
+                                .where('denData', data)
+                                .join('contatos', 'conId', 'denuncias.denConId')
+                                .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                                .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                                .orderBy('denData')
+                                .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+                        
+                                return response.json(denuncias);    
+                            }else {
+                                if (contato && !data && tipo && !subtipo) { 
+                                    const denuncias = await connection('denuncias')
+                                    .where('denCandidato', candidato)
+                                    .where('denConId', contato)
+                                    .where('denTipo', tipo)
+                                    .join('contatos', 'conId', 'denuncias.denConId')
+                                    .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                                    .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                                    .orderBy('denData')
+                                    .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+                            
+                                    return response.json(denuncias);    
+                                }else {
+                                    if (contato && !data && !tipo && subtipo) { 
+                                        const denuncias = await connection('denuncias')
+                                        .where('denCandidato', candidato)
+                                        .where('denConId', contato)
+                                        .where('denSubId', subtipo)
+                                        .join('contatos', 'conId', 'denuncias.denConId')
+                                        .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                                        .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                                        .orderBy('denData')
+                                        .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+                                
+                                        return response.json(denuncias);    
+                                    }else {
+                                        if (!contato && data && tipo && !subtipo) { 
+                                            const denuncias = await connection('denuncias')
+                                            .where('denCandidato', candidato)
+                                            .where('denData', data)
+                                            .where('denTipo', tipo)
+                                            .join('contatos', 'conId', 'denuncias.denConId')
+                                            .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                                            .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                                            .orderBy('denData')
+                                            .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+                                    
+                                            return response.json(denuncias);    
+                                        }else {
+                                            if (!contato && data && !tipo && subtipo) { 
+                                                const denuncias = await connection('denuncias')
+                                                .where('denCandidato', candidato)
+                                                .where('denData', data)
+                                                .where('denSubId', subtipo)
+                                                .join('contatos', 'conId', 'denuncias.denConId')
+                                                .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                                                .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                                                .orderBy('denData')
+                                                .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+                                        
+                                                return response.json(denuncias);    
+                                            }else {
+                                                if (!contato && !data && tipo && subtipo) { 
+                                                    const denuncias = await connection('denuncias')
+                                                    .where('denCandidato', candidato)
+                                                    .where('denTipo', tipo)
+                                                    .where('denSubId', subtipo)
+                                                    .join('contatos', 'conId', 'denuncias.denConId')
+                                                    .join('tipdenuncias', 'tdeId', 'denuncias.denTipo')
+                                                    .join('subTipDenuncias', 'stdId', 'denuncias.denSubId')
+                                                    .orderBy('denData')
+                                                    .select(['denuncias.*', 'tipdenuncias.tdeDescricao', 'subTipDenuncias.stdDescricao', 'contatos.conNomCompleto']);
+                                            
+                                                    return response.json(denuncias);    
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+
 
     },
 
