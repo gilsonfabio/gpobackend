@@ -77,7 +77,7 @@ routes.get('/tipdenuncias', TipDenController.index);
 
 routes.get('/subtipos', SubTipController.index);
 
-routes.get('/contatos/:idCan', ContatosController.index);
+routes.post('/contatos', ContatosController.index);
 routes.post('/signInCon', ContatosController.signIn);
 routes.post('/newcontato', ContatosController.create);
 routes.put('/updContato/:conId', ContatosController.updContato);

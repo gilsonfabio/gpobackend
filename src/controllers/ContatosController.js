@@ -51,14 +51,50 @@ module.exports = {
     },
 
     async index(request, response) {
-        let id = request.params.idCan; 
+        let id = request.body.idCan; 
         let status = 'A'; 
-        //console.log('Candidato',id)
+        
+        const page = request.body.page;
+        const per_page = request.body.per_page;
+         
+        let lastPage = 1;
+        
+        //console.log(request.body)
+         
+        const nrocontatos = await connection('contatos').count({ count: '*' });
+        const countUser = JSON.stringify(nrocontatos[0].count);
+
+        //console.log('página atual:',page);
+        //console.log('limite p/ página:',per_page);
+        //console.log('total de registros:',countUser);
+
+        if (countUser !== 0) {
+            lastPage = Math.ceil(countUser / per_page);
+            //console.log('última página:',lastPage);
+        } else {
+            return res.status(400).json({
+                mensagem: "Erro: Nenhum usuário encontrado!"
+            });
+        }
+
+        let offset = Number((page * per_page) - per_page);
+
+        //console.log('offset página:',offset);   
+        
+        const pagination = {
+            page: page,
+            per_page: per_page,
+            lastPage: lastPage,
+            countUser: countUser,
+            offset: offset
+        }
+
         const contatos = await connection('contatos')
         .where('conCandidato', id)
         .where('conStatus', status)
         .orderBy('conId', 'desc')
-        .limit(15)
+        .limit(per_page)
+        .offset(offset)    
         .select('*');
     
         //console.log(contatos);
