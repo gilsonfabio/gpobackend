@@ -98,7 +98,7 @@ module.exports = {
         .select('*');
     
         //console.log(contatos);
-        return response.json({contatos});
+        return response.json({pagination, contatos});
     }, 
 
     async busContatos(request, response) {
