@@ -61,7 +61,7 @@ module.exports = {
     async index (request, response) {
         const users = await connection('administradores')
         .orderBy('admNomCompleto')
-        .select('*');
+        .select('admNomUsuario', 'admNomCompleto', 'admFuncao', 'admEmail', 'admCelular', 'admEndereco', 'admNumero', 'admComplemento', 'admBairro', 'admCidade', 'admCep', 'admUrlPhoto', 'admCandidato');
     
         return response.json(users);
     }, 
