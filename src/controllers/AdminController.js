@@ -93,10 +93,10 @@ module.exports = {
     },
 
     async updUsuario(request, response) {
-        let id = request.params.idUsr;         
+        let id = request.params.idAdm;         
         const {admNomUsuario, admNomCompleto, admFuncao, admEmail, admCelular, admEndereco, admNumero, admComplemento, admBairro, admCidade, admCep, admUrlPhoto} = request.body;
  
-        await connection('administradores').where('usrId', id)   
+        await connection('administradores').where('admId', id)   
         .update({
             admNomUsuario, 
             admNomCompleto, 
