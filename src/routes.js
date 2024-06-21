@@ -62,10 +62,10 @@ async function verifyRefreshJWT(req, res, next){
 routes.post('/refreshToken', verifyRefreshJWT, AdminController.refreshToken);
 routes.post('/signIn', AdminController.signIn);
 
-routes.get('/users', verifyJWT, AdminController.index);
-routes.post('/newuser', verifyJWT, AdminController.create);
+routes.get('/users', AdminController.index);
+routes.post('/newuser', AdminController.create);
 routes.put('/solPassword/:email', AdminController.solPassword);
-routes.put('/updUsuario/:idAdm', verifyJWT, AdminController.updUsuario);
+routes.put('/updUsuario/:idAdm', AdminController.updUsuario);
 
 routes.get('/services', ServicesController.index);
 routes.get('/utilidades', UtilidadesController.index);
