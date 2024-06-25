@@ -63,7 +63,7 @@ module.exports = {
        
         const user = await connection('administradores')
             .where('admId', id)
-            .select('admId','admNomUsuario', 'admNomCompleto', 'admFuncao', 'admEmail', 'admCelular', 'admEndereco', 'admNumero', 'admComplemento', 'admBairro', 'admCidade', 'admCep', 'admUrlPhoto')
+            .select('admId','admNomUsuario', 'admNomCompleto', 'admFuncao', 'admEmail', 'admCelular', 'admEndereco', 'admNumero', 'admComplemento', 'admBairro', 'admCidade', 'admCep', 'admUrlPhoto', 'admStatus')
             .first();
           
         return response.json(user);
@@ -73,7 +73,7 @@ module.exports = {
     async index (request, response) {
         const users = await connection('administradores')
         .orderBy('admNomCompleto')
-        .select('admId','admNomUsuario', 'admNomCompleto', 'admFuncao', 'admEmail', 'admCelular', 'admEndereco', 'admNumero', 'admComplemento', 'admBairro', 'admCidade', 'admCep', 'admUrlPhoto', 'admCandidato');
+        .select('admId','admNomUsuario', 'admNomCompleto', 'admFuncao', 'admEmail', 'admCelular', 'admEndereco', 'admNumero', 'admComplemento', 'admBairro', 'admCidade', 'admCep', 'admUrlPhoto', 'admCandidato', 'admStatus');
     
         return response.json(users);
     }, 
@@ -151,7 +151,6 @@ module.exports = {
         });
 
         return response.json({user, token, refreshToken});
-
     },
 
     //...........................................................................................................................
