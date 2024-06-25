@@ -58,6 +58,18 @@ module.exports = {
 
     },
 
+    async searchUser(request, response) {
+        let id = request.params.idAdm;
+       
+        const user = await connection('administradores')
+            .where('admId', id)
+            .select('admId','admNomUsuario', 'admNomCompleto', 'admFuncao', 'admEmail', 'admCelular', 'admEndereco', 'admNumero', 'admComplemento', 'admBairro', 'admCidade', 'admCep', 'admUrlPhoto')
+            .first();
+          
+        return response.json(user);
+
+    },
+
     async index (request, response) {
         const users = await connection('administradores')
         .orderBy('admNomCompleto')

@@ -66,6 +66,7 @@ routes.get('/users', AdminController.index);
 routes.post('/newuser', AdminController.create);
 routes.put('/solPassword/:email', AdminController.solPassword);
 routes.put('/updUsuario/:idAdm', AdminController.updUsuario);
+routes.get('/searchUser/:idAdm', AdminController.searchUser);
 
 routes.get('/services', ServicesController.index);
 routes.get('/utilidades', UtilidadesController.index);
