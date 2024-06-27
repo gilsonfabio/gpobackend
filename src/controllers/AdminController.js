@@ -113,7 +113,7 @@ module.exports = {
 
     async updUsuario(request, response) {
         let id = request.params.idAdm;         
-        const {admNomUsuario, admNomCompleto, admFuncao, admEmail, admCelular, admEndereco, admNumero, admComplemento, admBairro, admCidade, admCep, admUrlPhoto} = request.body;
+        const {admNomUsuario, admNomCompleto, admFuncao, admEmail, admCelular, admEndereco, admNumero, admComplemento, admBairro, admCidade, admCep, admUrlPhoto, admStatus} = request.body;
  
         await connection('administradores').where('admId', id)   
         .update({
@@ -129,6 +129,7 @@ module.exports = {
             admCidade, 
             admCep, 
             admUrlPhoto, 
+            admStatus
         });
            
         return response.status(204).send();
