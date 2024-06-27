@@ -12,12 +12,14 @@ module.exports = {
     async signIn(request, response) {
         let email = request.body.email;
         let senha = request.body.password;
+        let status = "A"
        
         //console.log(email)
         //console.log(senha)
 
         const user = await connection('administradores')
             .where('admEmail', email)
+            .where('admStatus', status)
             .join('candidatos', 'canKey', 'administradores.admCandidato')
             .select('administradores.admId', 'administradores.admNomCompleto', 'administradores.admEmail', 'administradores.admPassword', 'administradores.admCandidato',  'administradores.admUrlPhoto', 'candidatos.canRazSocial')
             .first();
@@ -60,9 +62,11 @@ module.exports = {
 
     async searchUser(request, response) {
         let id = request.params.idAdm;
-       
+        let status = "A";
+
         const user = await connection('administradores')
             .where('admId', id)
+            .where('admStatus', status)
             .select('admId','admNomUsuario', 'admNomCompleto', 'admFuncao', 'admEmail', 'admCelular', 'admEndereco', 'admNumero', 'admComplemento', 'admBairro', 'admCidade', 'admCep', 'admUrlPhoto', 'admStatus')
             .first();
           
@@ -71,7 +75,10 @@ module.exports = {
     },
 
     async index (request, response) {
+        let status = "A";
+        
         const users = await connection('administradores')
+        .where('admStatus', status)
         .orderBy('admNomCompleto')
         .select('admId','admNomUsuario', 'admNomCompleto', 'admFuncao', 'admEmail', 'admCelular', 'admEndereco', 'admNumero', 'admComplemento', 'admBairro', 'admCidade', 'admCep', 'admUrlPhoto', 'admCandidato', 'admStatus');
     
