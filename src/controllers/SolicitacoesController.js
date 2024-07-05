@@ -17,7 +17,7 @@ module.exports = {
         .orderBy('solId', 'desc')
         .select(['solicitacoes.*', 'tipos.tipDescricao', 'services.srvDescricao', 'contatos.conNomCompleto']);
     
-        return response.json(solicitacoes);
+        return response.json({solicitacoes});
         //return response.json({pagination, contatos});
     }, 
 
