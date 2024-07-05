@@ -5,6 +5,9 @@ module.exports = {
     
     async index (request, response) {
         let id = request.body.idCan;  
+        const page = request.body.page;
+        const per_page = request.body.per_page;
+
         const solicitacoes = await connection('solicitacoes')
         .where('solCandidato', id)
         .join('contatos', 'conId', 'solicitacoes.solContato')
@@ -14,7 +17,8 @@ module.exports = {
         .orderBy('solId', 'desc')
         .select(['solicitacoes.*', 'tipos.tipDescricao', 'services.srvDescricao', 'contatos.conNomCompleto']);
     
-        return response.json(solicitacoes);
+        return response.json({solicitacoes});
+        //return response.json({pagination, contatos});
     }, 
 
     async solContato (request, response) {
