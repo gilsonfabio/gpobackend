@@ -4,7 +4,7 @@ const connection = require('../database/connection');
 module.exports = {       
     
     async index (request, response) {
-        let id = request.params.idCan;  
+        let id = request.body.idCan;  
         const solicitacoes = await connection('solicitacoes')
         .where('solCandidato', id)
         .join('contatos', 'conId', 'solicitacoes.solContato')
